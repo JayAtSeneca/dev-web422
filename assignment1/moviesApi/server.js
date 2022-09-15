@@ -1,13 +1,13 @@
 /*********************************************************************************
-* WEB422 – Assignment 1
-* I declare that this assignment is my own work in accordance with Seneca Academic Policy.
-* No part of this assignment has been copied manually or electronically from any other source
-* (including web sites) or distributed to other students.
-*
-* Name: Jay Pravinkumar Chaudhari Student ID: 147268205 Date: 09/15/2022
-* Cyclic Link: _______________________________________________________________
-*
-********************************************************************************/ 
+ * WEB422 – Assignment 1
+ * I declare that this assignment is my own work in accordance with Seneca Academic Policy.
+ * No part of this assignment has been copied manually or electronically from any other source
+ * (including web sites) or distributed to other students.
+ *
+ * Name: Jay Pravinkumar Chaudhari Student ID: 147268205 Date: 09/15/2022
+ * Cyclic Link: _______________________________________________________________
+ *
+ ********************************************************************************/
 
 const express = require("express");
 const cors = require("cors");
@@ -26,10 +26,14 @@ app.get("/", function (req, res) {
 
 //CREATE
 app.post("/api/movies", (req, res) => {
-  db.addNewMovie(req.body)
-    .then((data) => res.status(201).json(data))
-    .catch((err) => res.status(500).json({ message: err.message }));
-    console.log("Post Created")
+  if (req.body) {
+    db.addNewMovie(req.body)
+      .then((data) => res.status(201).json(data))
+      .catch((err) => res.status(500).json({ message: err.message }));
+    console.log("Post Created");
+  } else {
+    res.status(400).json({ message: "ERROR: Bad Request req.body is empty" });
+  }
 });
 
 //READ
@@ -72,7 +76,9 @@ app.delete("/api/movies/:id", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).json({message:"404 unable to find the requested resource"});
+  res
+    .status(404)
+    .json({ message: "404 unable to find the requested resource" });
 });
 
 db.initialize(process.env.MONGODB_CONN_STRING)
