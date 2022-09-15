@@ -1,3 +1,14 @@
+/*********************************************************************************
+* WEB422 – Assignment 1
+* I declare that this assignment is my own work in accordance with Seneca Academic Policy.
+* No part of this assignment has been copied manually or electronically from any other source
+* (including web sites) or distributed to other students.
+*
+* Name: Jay Pravinkumar Chaudhari Student ID: 147268205 Date: 09/15/2022
+* Cyclic Link: _______________________________________________________________
+*
+********************************************************************************/ 
+
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
@@ -17,7 +28,8 @@ app.get("/", function (req, res) {
 app.post("/api/movies", (req, res) => {
   db.addNewMovie(req.body)
     .then((data) => res.status(201).json(data))
-    .catch((err) => res.status(500).json({ message: err }));
+    .catch((err) => res.status(500).json({ message: err.message }));
+    console.log("Post Created")
 });
 
 //READ
@@ -36,7 +48,7 @@ app.get("/api/movies/:id", (req, res) => {
   if (req.params.id) {
     db.getMovieById(req.params.id)
       .then((data) => res.json(data))
-      .catch((err) => res.status(500).json({ message: err }));
+      .catch((err) => res.status(500).json({ message: err.message }));
   }
 });
 
@@ -44,8 +56,9 @@ app.get("/api/movies/:id", (req, res) => {
 app.put("/api/movies/:id", (req, res) => {
   if (req.params.id) {
     db.updateMovieById(req.body, req.params.id)
+      // Here the json data will not be displayed because of the 204 status code
       .then((data) => res.status(204).json({ message: "Updated Successfully" }))
-      .catch((err) => res.status(500).json({ message: err }));
+      .catch((err) => res.status(500).json({ message: err.message }));
   }
 });
 
@@ -53,13 +66,13 @@ app.put("/api/movies/:id", (req, res) => {
 app.delete("/api/movies/:id", (req, res) => {
   if (req.params.id) {
     db.deleteMovieById(req.params.id)
-      .then((data) => res.status(204).json({ message: "Deleted Successfully" }))
-      .catch((err) => res.status(500).json({ message: err }));
+      .then((data) => res.status(200).json({ message: "Deleted Successfully" }))
+      .catch((err) => res.status(500).json({ message: err.message }));
   }
 });
 
 app.use((req, res) => {
-  res.status(404).send("Resource not found");
+  res.status(404).json({message:"404 unable to find the requested resource"});
 });
 
 db.initialize(process.env.MONGODB_CONN_STRING)
