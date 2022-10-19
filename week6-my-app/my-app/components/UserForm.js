@@ -21,7 +21,7 @@ export default function UserForm() {
             userName: "Homer Simpson", 
             address: "123 Main St, Springfield U.S.A", 
             campus: "newnham", 
-            program: ['CPA', 'CPP'], 
+            program: ['CPA', 'CPP'],
             parking: "semester", 
             active: true
         }
@@ -63,7 +63,7 @@ export default function UserForm() {
             </select><br /><br />
 
             Parking: <br />
-            <input type="radio" value="daily" {...register("parking")} /> Daily<br />
+            <input  type="radio" value="daily" {...register("parking")} /> Daily<br />
             <input type="radio" value="semester" {...register("parking")} /> Semester<br />
             <input type="radio" value="year" {...register("parking")}  /> Academic Year<br /><br />
 

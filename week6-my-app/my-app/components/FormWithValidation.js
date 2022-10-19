@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 export default function FormWithValidation() {
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, formState: { errors }, watch } = useForm({
         defaultValues: {
             firstName: "",
             lastName: "",
@@ -24,11 +24,15 @@ export default function FormWithValidation() {
         }
     }, []);
 
+    const watchFirstName = watch("firstName");
+
     function submitForm(data) {
         console.log(data);
     }
 
     return (
+        <>
+        <p>Watch FirstName: {watchFirstName}</p>
         <form onSubmit={handleSubmit(submitForm)}>
             First Name: <br />
             <input className={errors.firstName && "inputError"} {...register("firstName", { required: true, maxLength: 20 })} />
@@ -44,5 +48,6 @@ export default function FormWithValidation() {
 
             <button type="submit" disabled={Object.keys(errors).length > 0}>Update User</button>
         </form>
+        </>
     );
 }
