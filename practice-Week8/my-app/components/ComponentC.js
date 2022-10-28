@@ -1,8 +1,8 @@
-import { useContext } from 'react';
-import {SetCountContext} from '../pages/_app';
+import { useAtom } from 'jotai';
+import { countAtom } from '../store';
 export default function ComponentC(){
     console.log("ComponentC");
-    const setCount = useContext(SetCountContext);
+    const [setCount] = useAtom(countAtom)[1];
     return(
         <>
             <button onClick={(e)=>setCount((count)=>count+1)}>Increase Value</button>
