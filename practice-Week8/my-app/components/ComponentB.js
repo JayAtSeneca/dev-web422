@@ -1,5 +1,5 @@
 import ComponentC from "./componentC";
-export default function ComponentB(props) {
+export default function ComponentB() {
   console.log("ComponentB");
-  return <ComponentC setCount={props.setCount}/>;
+  return <ComponentC />;
 }
