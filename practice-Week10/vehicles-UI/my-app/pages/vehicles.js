@@ -1,11 +1,12 @@
 import { Card, Table } from "react-bootstrap";
+import { getToken } from "../lib/authenticate";
 import useSWR from 'swr';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Vehicles() {
 
-  const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/vehicles`, fetcher);
+  const { data, error } = useSWR([`${process.env.NEXT_PUBLIC_API_URL}/vehicles`, { headers: { "Authorization": `JWT ${getToken()}` } }], fetcher);
 
   return (
     <>
