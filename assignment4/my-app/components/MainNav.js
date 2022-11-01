@@ -5,7 +5,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import Link from 'next/link';
 
 
 export default function MainNav(){
