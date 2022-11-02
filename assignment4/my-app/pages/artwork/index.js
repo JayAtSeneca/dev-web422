@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Error from "next/error";
@@ -11,7 +11,7 @@ import Pagination from 'react-bootstrap/Pagination';
 export default function Artwork(){
     const PER_PAGE = 12;
 
-    const[artworkList, setArtworkList] = useState();
+    const[artworkList, setArtworkList] = useState([]);
     const[page,setPage] = useState(1);
 
     const router = useRouter();
@@ -31,34 +31,36 @@ export default function Artwork(){
     }
 
     useEffect(() => {
-        if(data != null && data != undefined){
+        if(data){
             let results = [];
+            console.log(data);
             for (let i = 0; i < data?.objectIDs?.length; i += PER_PAGE) {
                 const chunk = data?.objectIDs.slice(i, i + PER_PAGE);
                 results.push(chunk);
             }
-            setArtworkList(results);    
+            setArtworkList(results);  
+            // setPage(1); 
         }
-        setPage(1);
+        
     }, [data]);
 
     if(error){
         return (<Error statusCode={404} />);
     }
     if(artworkList){
-        if(artworkList == null && artworkList == undefined){
+        if(artworkList == null || artworkList == undefined){
             return null;
         }
         else{
-            if(artworkList.length > 0){
+            if(artworkList?.length > 0){
                 return (
                     <>
                         <Row className="gy-4">
-                            {artworkList[page - 1].map((currentObjectID)=>{
+                            {artworkList[page - 1]?.map((currentObjectID)=>(
                                 <Col lg={3} key={currentObjectID}>
                                     <ArtworkCard objectID={currentObjectID} />
                                 </Col>
-                            })}
+                            ))}
                         </Row> 
                         <Row>
                             <Col>
@@ -73,7 +75,7 @@ export default function Artwork(){
                     </>
                 );
             }
-            else if(artworkList.length == 0){
+            else{
                 return (
                     <>
                         <Row className="gy-4">
