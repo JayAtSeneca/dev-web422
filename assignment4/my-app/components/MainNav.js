@@ -5,6 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import Link from 'next/link';
 
 
 export default function MainNav(){
@@ -22,11 +23,9 @@ export default function MainNav(){
             <Navbar.Brand >Jay Pravinkumar Chaudhari</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
-              <Nav
-                className="me-auto"
-              >
-                <Nav.Link href='/'>Home</Nav.Link>
-                <Nav.Link href='/search'>Advanced Search</Nav.Link>
+              <Nav className="me-auto">
+                <Link href="/" passHref legacyBehavior><Nav.Link>Home</Nav.Link></Link>
+                <Link href="/search" passHref legacyBehavior><Nav.Link>Advanced Search</Nav.Link></Link>
               </Nav>
               <Form className="d-flex" onSubmit={submitForm}>
                 <Form.Control
