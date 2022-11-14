@@ -26,8 +26,8 @@ export default function MainNav(){
             <Navbar.Toggle aria-controls="navbarScroll" onClick={e=>setIsExpanded((value)=>!value)} />
             <Navbar.Collapse id="navbarScroll">
               <Nav className="me-auto">
-                <Link href="/" passHref legacyBehavior><Nav.Link onClick={e=>setIsExpanded((value)=>!value)}>Home</Nav.Link></Link>
-                <Link href="/search" passHref legacyBehavior><Nav.Link onClick={e=>setIsExpanded((value)=>!value)}>Advanced Search</Nav.Link></Link>
+                <Link href="/" passHref legacyBehavior><Nav.Link onClick={e=> isExpanded ? setIsExpanded((value)=>!value):null}>Home</Nav.Link></Link>
+                <Link href="/search" passHref legacyBehavior><Nav.Link onClick={e=> isExpanded? setIsExpanded((value)=>!value):null}>Advanced Search</Nav.Link></Link>
               </Nav>
               &nbsp;
               <Form className="d-flex" onSubmit={submitForm}>
