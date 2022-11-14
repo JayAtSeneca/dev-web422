@@ -52,6 +52,7 @@ export default function MainNav(){
               <Nav>
                 <NavDropdown title="User Name" id="basic-nav-dropdown">
                   <Link href="/favourites" passHref legacyBehavior><NavDropdown.Item onClick={e=> isExpanded ? setIsExpanded((value)=>!value):null}>Favourites</NavDropdown.Item></Link>
+                  <Link href="/history" passHref legacyBehavior><NavDropdown.Item onClick={e=> isExpanded ? setIsExpanded((value)=>!value):null}>Search History</NavDropdown.Item></Link>
             </NavDropdown>
               </Nav>
             </Navbar.Collapse>
