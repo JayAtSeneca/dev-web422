@@ -7,16 +7,22 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Link from 'next/link';
+import { useAtom } from 'jotai';
+import { searchHistoryAtom } from '../store';
+
 
 
 export default function MainNav(){
     const [searchField, setSearchField] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
+    const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
     const router = useRouter();
 
     function submitForm(e){
         e.preventDefault();
         setIsExpanded(false);
+        let queryString = `title=true&q=${searchField}`;
+        setSearchHistory(current => [...current, queryString]);
         router.push(`/artwork?title=true&q=${searchField}`);
     }
     return (
