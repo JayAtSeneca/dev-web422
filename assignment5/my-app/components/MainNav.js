@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -21,7 +22,7 @@ export default function MainNav(){
     return (
         <>
         <Navbar className="fixed-top navbar-dark bg-dark" expand="lg" expanded={isExpanded}>
-          <Container fluid>
+          <Container>
             <Navbar.Brand >Jay Pravinkumar Chaudhari</Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" onClick={e=>setIsExpanded((value)=>!value)} />
             <Navbar.Collapse id="navbarScroll">
@@ -42,6 +43,11 @@ export default function MainNav(){
                 <Button variant="success" type='submit'>Search</Button>
               </Form>
               &nbsp;
+              <Nav>
+                <NavDropdown title="User Name" id="basic-nav-dropdown">
+                  <Link href="/favourites" passHref legacyBehavior><NavDropdown.Item onClick={e=> isExpanded ? setIsExpanded((value)=>!value):null}>Favourites</NavDropdown.Item></Link>
+            </NavDropdown>
+              </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>

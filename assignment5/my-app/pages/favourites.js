@@ -9,11 +9,11 @@ import { favouritesAtom } from "../store";
 export default function Favourites(){
     const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
     if(favouritesList){
-        if(favouritesList.length == 0){
+        if(favouritesList?.length == 0){
             return (
             <>
                 <Row className="gy-4">
-                    <Card>
+                     <Card>
                         <Card.Body>
                         <Card.Text>
                             <h4>Nothing Here</h4><br/>
@@ -22,7 +22,8 @@ export default function Favourites(){
                         </Card.Body>
                     </Card>
                 </Row>
-            </>);
+            </>
+            );
         }
         else{
             return (<>
