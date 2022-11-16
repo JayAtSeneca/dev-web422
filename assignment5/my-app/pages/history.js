@@ -36,11 +36,9 @@ export default function History() {
         <Row className="gy-4">
           <Card>
             <Card.Body>
-              <Card.Text>
                 <h4>Nothing Here</h4>
                 <br />
                 Try searching for something else
-              </Card.Text>
             </Card.Body>
           </Card>
         </Row>
