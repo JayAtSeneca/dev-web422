@@ -9,7 +9,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useAtom } from "jotai";
 import { searchHistoryAtom } from "../store";
-import { addtoHistory } from "../lib/userData";
+import { addToHistory } from "../lib/userData";
 
 export default function MainNav() {
   const [searchField, setSearchField] = useState("");
