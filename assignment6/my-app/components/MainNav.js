@@ -10,19 +10,31 @@ import Link from "next/link";
 import { useAtom } from "jotai";
 import { searchHistoryAtom } from "../store";
 import { addToHistory } from "../lib/userData";
+import { readToken, removeToken } from '../lib/authenticate';
 
 export default function MainNav() {
   const [searchField, setSearchField] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
   const router = useRouter();
+  let token = readToken();
 
   async function submitForm(e) {
     e.preventDefault();
     setIsExpanded(false);
-    setSearchHistory(await addToHistory(`title=true&q=${searchField}`));
-    router.push(`/artwork?title=true&q=${searchField}`);
+    let search = searchField;
+    setSearchField("");
+    setSearchHistory(await addToHistory(`title=true&q=${search}`));
+    router.push(`/artwork?title=true&q=${search}`);
   }
+
+  function logout() {
+    setIsExpanded(false);
+    removeToken();
+    router.push('/login');
+  }
+
+
   return (
     <>
       <Navbar
@@ -48,7 +60,7 @@ export default function MainNav() {
                   Home
                 </Nav.Link>
               </Link>
-              <Link href="/search" passHref legacyBehavior>
+              {token && <Link href="/search" passHref legacyBehavior>
                 <Nav.Link
                   onClick={(e) =>
                     isExpanded ? setIsExpanded((value) => !value) : null
@@ -57,10 +69,10 @@ export default function MainNav() {
                 >
                   Advanced Search
                 </Nav.Link>
-              </Link>
+              </Link>}
             </Nav>
             &nbsp;
-            <Form className="d-flex" onSubmit={submitForm}>
+            {token && <Form className="d-flex" onSubmit={submitForm}>
               <Form.Control
                 type="search"
                 placeholder="Search"
@@ -72,16 +84,16 @@ export default function MainNav() {
               <Button variant="success" type="submit">
                 Search
               </Button>
-            </Form>
+            </Form>}
             &nbsp;
+            {token ? 
             <Nav>
-              <NavDropdown title="User Name" id="basic-nav-dropdown">
+              <NavDropdown title={token.userName} id="basic-nav-dropdown">
                 <Link href="/favourites" passHref legacyBehavior>
                   <NavDropdown.Item
                     onClick={(e) =>
                       isExpanded ? setIsExpanded((value) => !value) : null
                     }
-                    active={router.pathname === "/favourites"}
                   >
                     Favourites
                   </NavDropdown.Item>
@@ -91,13 +103,44 @@ export default function MainNav() {
                     onClick={(e) =>
                       isExpanded ? setIsExpanded((value) => !value) : null
                     }
-                    active={router.pathname === "/history"}
                   >
                     Search History
                   </NavDropdown.Item>
                 </Link>
+                <NavDropdown.Item
+                  onClick={logout}
+                >
+                  Logout
+                </NavDropdown.Item>
               </NavDropdown>
+            </Nav> 
+            :
+            <Nav className="ms-auto">
+              <Link href="/register" passHref legacyBehavior>
+                  <Nav.Link
+                    onClick={(e) =>
+                      isExpanded ? setIsExpanded((value) => !value) : null
+                    }
+                    active={router.pathname === "/register"}
+                  >
+                    Register
+                  </Nav.Link>
+              </Link>
+
+              <Link href="/login" passHref legacyBehavior>
+                  <Nav.Link
+                    onClick={(e) =>
+                      isExpanded ? setIsExpanded((value) => !value) : null
+                    }
+                    active={router.pathname === "/login"}
+                  >
+                    Login
+                  </Nav.Link>
+              </Link>
+
             </Nav>
+            }
+            
           </Navbar.Collapse>
         </Container>
       </Navbar>
