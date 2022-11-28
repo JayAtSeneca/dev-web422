@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from 'react-bootstrap/Button';
 import styles from '../styles/History.module.css';
-import { removeHistory } from '../lib/userData';
+import { removeFromHistory } from '../lib/userData';
 
 export default function History() {
   const router = useRouter();
